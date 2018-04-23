@@ -40,7 +40,7 @@ if($num>0){
  
         $person_item=array(
             "idPerson" => $idPerson,
-            "fiestName" => $firstName,
+            "firstName" => $firstName,
             "lastName" => $lastName,
             "phoneNumber" => $phoneNumber,
             "address" => html_entity_decode($address),

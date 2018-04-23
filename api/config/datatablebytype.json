@@ -1,0 +1,36 @@
+{
+    "dataTypes":[
+        {
+            "numeric":{
+                "table_value":"numericdatabyentityid",
+                "key_value":"idNumericDataByEntityId",
+                "table_conf":"numericdatabycoproentities",
+                "key_conf":"idNumericDataByCoproEntity"
+            }
+        },
+        {
+            "string":{
+                "table_value":"stringdatabyentityid",
+                "key_value":"idStringDataByEntityId",
+                "table_conf":"stringdatabycoproentities",
+                "key_conf":"idStringDataByCoproEntity"
+            }
+        },
+        {
+            "time":{
+                "table_value":"timedatabyentityid",
+                "key_value":"idTimeDataByEntityId",
+                "table_conf":"timedatabycoproentities",
+                "key_conf":"idTimeDataByCoproEntity"
+            }
+        },
+        {
+            "file":{
+                "table_value":"filebyentityid",
+                "key_value":"idFileByEntityId",
+                "table_conf":"filebycoproentities",
+                "key_conf":"idFileByCoproEntity"
+            }
+        }
+    ]
+}

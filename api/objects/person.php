@@ -62,7 +62,7 @@ class Person{
        $stmt = $this->conn->prepare( $query );
     
        // bind id of person to be updated
-       $stmt->bindParam(1, $this->id);
+       $stmt->bindParam(1, $this->idPerson);
     
        // execute query
        $stmt->execute();
@@ -165,6 +165,7 @@ class Person{
        $stmt->bindParam(":lastUpdate", $this->lastUpdate);
        $stmt->bindParam(":enabled", $this->enabled);
        $stmt->bindParam(":password", $this->password);
+       $stmt->bindParam(":idPerson", $this->idPerson);
     
        // execute the query
        if($stmt->execute()){
@@ -184,10 +185,10 @@ class Person{
        $stmt = $this->conn->prepare($query);
     
        // sanitize
-       $this->id=htmlspecialchars(strip_tags($this->id));
+       $this->idPerson=htmlspecialchars(strip_tags($this->idPerson));
     
        // bind id of record to delete
-       $stmt->bindParam(1, $this->id);
+       $stmt->bindParam(1, $this->idPerson);
     
        // execute query
        if($stmt->execute()){

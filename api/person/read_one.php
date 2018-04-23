@@ -27,7 +27,7 @@ $stmt = $person->readOne();
     // retrieve our table contents
     $persons_arr=array(
         "idPerson" => $person->idPerson,
-        "fiestName" => $person->firstName,
+        "firstName" => $person->firstName,
         "lastName" => $person->lastName,
         "phoneNumber" => $person->phoneNumber,
         "address" => html_entity_decode($person->address),

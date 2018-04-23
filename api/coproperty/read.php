@@ -9,25 +9,25 @@ header('Content-Type: application/json');
  
 // include database and object files
 include_once '../config/database.php';
-include_once '../objects/person.php';
+include_once '../objects/coproperty.php';
  
-// instantiate database and person object
+// instantiate database and coproperty object
 $database = new Database();
 $db = $database->getConnection();
  
 // initialize object
-$person = new Person($db);
+$coproperty = new Coproperty($db);
  
-// query persons
-$stmt = $person->read();
+// query copropertys
+$stmt = $coproperty->read();
 $num = $stmt->rowCount();
  
 // check if more than 0 record found
 if($num>0){
  
-    // persons array
-    $persons_arr=array();
-    $persons_arr["records"]=array();
+    // copropertys array
+    $copropertys_arr=array();
+    $copropertys_arr["records"]=array();
  
     // retrieve our table contents
     // fetch() is faster than fetchAll()
@@ -38,28 +38,26 @@ if($num>0){
         // just $name only
         extract($row);
  
-        $person_item=array(
-            "idPerson" => $idPerson,
-            "fiestName" => $firstName,
-            "lastName" => $lastName,
-            "phoneNumber" => $phoneNumber,
+        $coproperty_item=array(
+            "idCoproperty" => $idCoproperty,
+            "identification" => $identification,
             "address" => html_entity_decode($address),
-            "email" => $email,
-            "language" => $language,
+            "latitud" => $latitud,
+            "longitud" => $longitud,
             "suscriptionDate" => $suscriptionDate,
             "lastUpdate" => $lastUpdate,
             "enabled" => $enabled
         );
  
-        array_push($persons_arr["records"], $person_item);
+        array_push($copropertys_arr["records"], $coproperty_item);
     }
  
-    echo json_encode($persons_arr);
+    echo json_encode($copropertys_arr);
 }
  
 else{
     echo json_encode(
-        array("message" => "No persons found.")
+        array("message" => "No copropertys found.")
     );
 }
 ?>

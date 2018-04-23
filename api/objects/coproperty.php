@@ -14,11 +14,8 @@ class Coproperty{
     public $suscriptionDate;
     public $lastUpdate;
     public $enabled;
-    public $stringData = array();
-    public $numericData = array();
-    public $timeData = array();
-    public $fileData = array();
-
+    public $customParams = [];
+    //TODO add number of owners, living owners, and renters
  
     // constructor with $db as database connection
     public function __construct($db){
@@ -64,7 +61,7 @@ class Coproperty{
        $stmt = $this->conn->prepare( $query );
     
        // bind id of coproperty to be updated
-       $stmt->bindParam(1, $this->id);
+       $stmt->bindParam(1, $this->idCoproperty);
     
        // execute query
        $stmt->execute();
@@ -80,6 +77,7 @@ class Coproperty{
        $this->suscriptionDate = $row['suscriptionDate'];
        $this->lastUpdate = $row['lastUpdate'];
        $this->enabled = $row['enabled'];
+
     }
     
     // create coproperty
