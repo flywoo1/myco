@@ -22,16 +22,13 @@ $suscriptionDate = date('Y-m-d H:i:s');
 $data = json_decode(file_get_contents("php://input"));
  
 // set coproperty property values
-$coproperty->firstName = $data->firstName;
-$coproperty->$lastName = $data->lastName;
-$coproperty->$phoneNumber = $data->phoneNumber;
-$coproperty->$address = $data->address;
-$coproperty->$email = $data->email;
-$coproperty->$password = $data->password;
-$coproperty->$language = $data->language;
-$coproperty->$suscriptionDate = $suscriptionDate;
-$coproperty->$lastUpdate = $suscriptionDate;
-$coproperty->$enabled = 0;
+$coproperty->identification = $data->identification;
+$coproperty->address = $data->address;
+$coproperty->latitud = $data->latitud;
+$coproperty->longitud = $data->longitud;
+$coproperty->suscriptionDate = $data->suscriptionDate;
+$coproperty->lastUpdate = $data->lasUpdate;
+$coproperty->enabled = $data->enabled;
  
 // create the coproperty
 if($coproperty->create()){

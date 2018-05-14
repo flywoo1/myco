@@ -7,7 +7,9 @@ header("Content-Type: application/json; charset=UTF-8");
 include_once '../config/database.php';
 include_once '../objects/coproperty.php';
 include_once '../objects/customParam.php';
- 
+include_once '../objects/roles/owner.php';
+include_once '../objects/roles/renter.php';
+
 // instantiate database and coproperty object
 $database = new Database();
 $db = $database->getConnection();
@@ -35,7 +37,11 @@ $stmt = $coproperty->readOne();
         "suscriptionDate" => $coproperty->suscriptionDate,
         "lastUpdate" => $coproperty->lastUpdate,
         "enabled" => $coproperty->enabled,
-        "customParams" => []
+        "customParams" => $coproperty->customParams,
+        "numberOfProperties" => $coproperty->numberOfProperties,
+        "numberOfOwners" => $coproperty->numberOfOwners,
+        "numberOfLivingOwners" => $coproperty->numberOfLivingOwners,
+        "numberOfRenters" => $coproperty->numberOfRenters
     );
     
     // assoc CustomParam push custom params by copro by EntityId 5 (coproperty)
@@ -57,7 +63,7 @@ $stmt = $coproperty->readOne();
 
             extract($row);
     
-            $customParam=array(
+            $customParam_arr=array(
                 "id_conf" => $id_conf,
                 "id_value" => $id_value,
                 "type" => $type,
@@ -66,8 +72,41 @@ $stmt = $coproperty->readOne();
                 "fieldorder" => $fieldorder
             );
     
-            array_push($copropertys_arr["customParams"], $customParam);
+            array_push($copropertys_arr["customParams"], $customParam_arr);
         }
+    }
+
+    //add number of owners, living ones, renters
+    $owner = new Owner($db);
+    $owner->idCoproperty=$coproperty->idCoproperty;
+
+    $stmt = $owner->countByIdCopro();
+    $num = $stmt->rowCount();
+    if($num>0){
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        extract($row);
+        $copropertys_arr["numberOfOwners"] += $number;
+    }
+
+    //add number of living ones
+    $stmt = $owner->livingCountByIdCopro();
+    $num = $stmt->rowCount();
+    if($num>0){
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        extract($row);
+        $copropertys_arr["numberOfLivingOwners"] += $number;
+    }
+
+    //add number renters
+    $renter = new Renter($db);
+    $renter->idCoproperty=$coproperty->idCoproperty;
+
+    $stmt = $renter->countByIdCopro();
+    $num = $stmt->rowCount();
+    if($num>0){
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        extract($row);
+        $copropertys_arr["numberOfRenters"] += $number;
     }
     
     // make it json format

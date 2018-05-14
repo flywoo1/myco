@@ -17,7 +17,7 @@ class Person{
     public $suscriptionDate;
     public $lastUpdate;
     public $enabled;
-    public $roles = array();
+    public $roles = [];
  
     // constructor with $db as database connection
     public function __construct($db){
@@ -50,7 +50,7 @@ class Person{
        // query to read single record
        $query = "SELECT
                    p.idPerson, p.firstName, p.lastName, p.phoneNumber, p.address, p.email,
-                   p.language, p.suscriptionDate, p.lastUpdate, p.enabled
+                   p.password, p.language, p.suscriptionDate, p.lastUpdate, p.enabled
                FROM
                    " . $this->table_name . " p
                WHERE
@@ -75,6 +75,8 @@ class Person{
        $this->lastName = $row['lastName'];
        $this->phoneNumber = $row['phoneNumber'];
        $this->address = $row['address'];
+       $this->email = $row['email'];
+       $this->password = $row['password'];
        $this->language = $row['language'];
        $this->suscriptionDate = $row['suscriptionDate'];
        $this->lastUpdate = $row['lastUpdate'];
@@ -88,7 +90,7 @@ class Person{
         $query = "INSERT INTO
                     " . $this->table_name . "
                 SET
-                    firstName=:firstName, lastName=:lastName, phoneNumber=:phoneNumber, address=:address
+                    firstName=:firstName, lastName=:lastName, phoneNumber=:phoneNumber, email=:email, address=:address
                     , language=:language, suscriptionDate=:suscriptionDate, lastUpdate=:lastUpdate, enabled=:enabled
                     , password=:password";
     
@@ -100,6 +102,7 @@ class Person{
         $this->lastName=htmlspecialchars(strip_tags($this->lastName));
         $this->phoneNumber=htmlspecialchars(strip_tags($this->phoneNumber));
         $this->address=htmlspecialchars(strip_tags($this->address));
+        $this->email=htmlspecialchars(strip_tags($this->email));
         $this->language=htmlspecialchars(strip_tags($this->language));
         $this->suscriptionDate=htmlspecialchars(strip_tags($this->suscriptionDate));
         $this->lastUpdate=htmlspecialchars(strip_tags($this->lastUpdate));
@@ -111,6 +114,7 @@ class Person{
         $stmt->bindParam(":lastName", $this->lastName);
         $stmt->bindParam(":phoneNumber", $this->phoneNumber);
         $stmt->bindParam(":address", $this->address);
+        $stmt->bindParam(":email", $this->email);
         $stmt->bindParam(":language", $this->language);
         $stmt->bindParam(":suscriptionDate", $this->suscriptionDate);
         $stmt->bindParam(":lastUpdate", $this->lastUpdate);
@@ -134,8 +138,8 @@ class Person{
                    " . $this->table_name . "
                SET
                firstName=:firstName, lastName=:lastName, 
-               phoneNumber=:phoneNumber, address=:address, 
-               language=:language, suscriptionDate=:suscriptionDate, 
+               phoneNumber=:phoneNumber, address=:address, email=:email,
+               language=:language, 
                lastUpdate=:lastUpdate, enabled=:enabled,
                password=:password
                WHERE
@@ -149,19 +153,20 @@ class Person{
        $this->lastName=htmlspecialchars(strip_tags($this->lastName));
        $this->phoneNumber=htmlspecialchars(strip_tags($this->phoneNumber));
        $this->address=htmlspecialchars(strip_tags($this->address));
+       $this->email=htmlspecialchars(strip_tags($this->email));
        $this->language=htmlspecialchars(strip_tags($this->language));
-       $this->suscriptionDate=htmlspecialchars(strip_tags($this->suscriptionDate));
        $this->lastUpdate=htmlspecialchars(strip_tags($this->lastUpdate));
        $this->enabled=htmlspecialchars(strip_tags($this->enabled));
        $this->password=htmlspecialchars(strip_tags($this->password));
+       $this->idPerson=htmlspecialchars(strip_tags($this->idPerson));
    
        // bind values
        $stmt->bindParam(":firstName", $this->firstName);
        $stmt->bindParam(":lastName", $this->lastName);
        $stmt->bindParam(":phoneNumber", $this->phoneNumber);
        $stmt->bindParam(":address", $this->address);
+       $stmt->bindParam(":email", $this->email);
        $stmt->bindParam(":language", $this->language);
-       $stmt->bindParam(":suscriptionDate", $this->suscriptionDate);
        $stmt->bindParam(":lastUpdate", $this->lastUpdate);
        $stmt->bindParam(":enabled", $this->enabled);
        $stmt->bindParam(":password", $this->password);
@@ -175,7 +180,7 @@ class Person{
        return false;
    }
 
-   // delete the product
+   // delete the person
     function delete(){
     
        // delete query

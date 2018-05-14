@@ -1,0 +1,130 @@
+<div class="row m-b-18px">
+  <div class="col-md-12">
+    <a (click)="readPersons()" class='btn btn-primary pull-right'>
+          <span class='glyphicon glyphicon-list'></span> Read persons
+      </a>
+  </div>
+</div>
+
+<!-- HTML form for creating a person -->
+<div class="row">
+  <div class="col-md-12">
+
+    <!--
+  1. Bind our HTML form to Angular using [formGroup]
+  2. If form was submitted, call createperson() method of CreatepersonComponent
+-->
+    <form [formGroup]="create_person_form" (ngSubmit)="createPerson()">
+      <table class="table table-hover table-responsive table-bordered">
+        <tr>
+          <td>First Name</td>
+          <td>
+            <!-- Bind this input field to our 'angular form field' using formControlName -->
+            <input formControlName="firstName" name="firstName" type="text" class="form-control" required />
+
+            <!-- show this error if the field is 'empty' and 'touched' -->
+            <div *ngIf="create_person_form.get('firstName').touched && create_person_form.get('firstName').hasError('required')" class="alert alert-danger">
+              firstName is required.
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Last Name</td>
+          <td>
+            <!-- Bind this input field to our 'angular form field' using formControlName -->
+            <input formControlName="lastName" name="lastName" type="text" class="form-control" required />
+
+            <!-- show this error if the field is 'empty' and 'touched' -->
+            <div *ngIf="create_person_form.get('lastName').touched && create_person_form.get('lastName').hasError('required')" class="alert alert-danger">
+              lastName is required.
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Phone number</td>
+          <td>
+            <input formControlName="phoneNumber" type="number" name="phoneNumber" class="form-control" required />
+
+            <!-- show this error if the field is 'empty' and 'touched' -->
+            <div *ngIf="create_person_form.get('phoneNumber').touched && create_person_form.get('phoneNumber').hasError('required')"
+              class="alert alert-danger">
+              Phone Number is required.
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Address</td>
+          <td>
+            <input formControlName="address" type="text" name="address" class="form-control" required />
+
+            <!-- show this error if the field is 'empty' and 'touched' -->
+            <div *ngIf="create_person_form.get('address').touched && create_person_form.get('address').hasError('required')" class="alert alert-danger">
+              Address is required.
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Email</td>
+          <td>
+            <input formControlName="email" type="text" name="email" class="form-control" required />
+
+            <!-- show this error if the field is 'empty' and 'touched' -->
+            <div *ngIf="create_person_form.get('email').touched && create_person_form.get('email').hasError('required')" class="alert alert-danger">
+              Email is required.
+            </div>
+          </td>
+        </tr>
+
+        <!-- TODO add language -->
+        <!-- for further textarea implementation
+  <tr>
+      <td>Address</td>
+      <td>
+          <textarea
+              formControlName="address"
+              name="address" class="form-control" required></textarea>
+              <div
+                  *ngIf="create_person_form.get('address').touched && create_person_form.get('address').hasError('required')"
+                  class="alert alert-danger">
+                  Address is required.
+              </div>
+      </td>
+  </tr>
+-->
+
+
+        <!-- for further role implementation
+  <tr>
+      <td>Role</td>
+      <td>
+          <select formControlName="category_id" name="category_id" class="form-control">
+              <option *ngFor="let category of categories" value="{{category.id}}">
+                  {{category.name}}
+              </option>
+          </select>
+          <div
+              *ngIf="create_person_form.get('category_id').touched && create_person_form.get('category_id').hasError('required')"
+              class="alert alert-danger">
+              Category is required.
+          </div>
+      </td>
+  </tr>
+-->
+        <tr>
+          <td></td>
+          <td>
+            <!-- disable the submit button if the form is 'invalid' -->
+            <button class="btn btn-primary" type="submit" [disabled]="create_person_form.invalid">
+              <span class="glyphicon glyphicon-plus"></span> Create
+          </button>
+          </td>
+        </tr>
+      </table>
+    </form>
+
+  </div>
+</div>

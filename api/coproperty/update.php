@@ -8,44 +8,41 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
  
 // include database and object files
 include_once '../config/database.php';
-include_once '../objects/person.php';
+include_once '../objects/coproperty.php';
  
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare person object
-$person = new Person($db);
+// prepare coproperty object
+$coproperty = new Coproperty($db);
  
-// get id of person to be edited
+// get id of coproperty to be edited
 $data = json_decode(file_get_contents("php://input"));
  
-// set ID property of person to be edited
-$person->idPerson = $data->idPerson;
+// set ID property of coproperty to be edited
+$coproperty->idCoproperty = $data->idCoproperty;
  
-// set person property values
-$person->firstName = $data->firstName;
-$person->$lastName = $data->lastName;
-$person->$phoneNumber = $data->phoneNumber;
-$person->$address = $data->address;
-$person->$email = $data->email;
-$person->$password = $data->password;
-$person->$language = $data->language;
-$person->$suscriptionDate = $data->suscriptionDate;
-$person->$lastUpdate = $data->suscriptionDate;
-$person->$enabled = $data->enabled;
+// set coproperty property values
+$coproperty->identification = $data->identification;
+$coproperty->address = $data->address;
+$coproperty->latitud = $data->latitud;
+$coproperty->longitud = $data->longitud;
+$coproperty->suscriptionDate = $data->suscriptionDate;
+$coproperty->lastUpdate = $data->lasUpdate;
+$coproperty->enabled = $data->enabled;
  
-// update the person
-if($person->update()){
+// update the coproperty
+if($coproperty->update()){
     echo '{';
-        echo '"message": "person was updated."';
+        echo '"message": "coproperty was updated."';
     echo '}';
 }
  
-// if unable to update the person, tell the user
+// if unable to update the coproperty, tell the user
 else{
     echo '{';
-        echo '"message": "Unable to update person."';
+        echo '"message": "Unable to update coproperty."';
     echo '}';
 }
 ?>

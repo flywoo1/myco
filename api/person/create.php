@@ -17,21 +17,34 @@ $db = $database->getConnection();
  
 $person = new Person($db);
 $suscriptionDate = date('Y-m-d H:i:s');
+
+function random_password() 
+{
+    $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+    $password = array(); 
+    $alpha_length = strlen($alphabet) - 1; 
+    for ($i = 0; $i < 8; $i++) 
+    {
+        $n = rand(0, $alpha_length);
+        $password[] = $alphabet[$n];
+    }
+    return implode($password); 
+} 
  
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
  
 // set person property values
 $person->firstName = $data->firstName;
-$person->$lastName = $data->lastName;
-$person->$phoneNumber = $data->phoneNumber;
-$person->$address = $data->address;
-$person->$email = $data->email;
-$person->$password = $data->password;
-$person->$language = $data->language;
-$person->$suscriptionDate = $suscriptionDate;
-$person->$lastUpdate = $suscriptionDate;
-$person->$enabled = 0;
+$person->lastName = $data->lastName;
+$person->phoneNumber = $data->phoneNumber;
+$person->address = $data->address;
+$person->email = $data->email;
+$person->password = random_password();
+$person->language = 'fr'; // $data->language;
+$person->suscriptionDate = $suscriptionDate;
+$person->lastUpdate = $suscriptionDate;
+$person->enabled = 0;
  
 // create the person
 if($person->create()){

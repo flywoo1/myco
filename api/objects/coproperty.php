@@ -15,7 +15,12 @@ class Coproperty{
     public $lastUpdate;
     public $enabled;
     public $customParams = [];
-    //TODO add number of owners, living owners, and renters
+    public $numberOfProperties = 0;
+    public $numberOfOwners = 0;
+    public $numberOfLivingOwners = 0;
+    public $numberOfRenters = 0;
+
+    //TODO add union?
  
     // constructor with $db as database connection
     public function __construct($db){
@@ -144,6 +149,7 @@ class Coproperty{
        $this->suscriptionDate=htmlspecialchars(strip_tags($this->suscriptionDate));
        $this->lastUpdate=htmlspecialchars(strip_tags($this->lastUpdate));
        $this->enabled=htmlspecialchars(strip_tags($this->enabled));
+       $this->idCoproperty=htmlspecialchars(strip_tags($this->idCoproperty));
    
        // bind values
        $stmt->bindParam(":identification", $this->identification);
@@ -153,7 +159,8 @@ class Coproperty{
        $stmt->bindParam(":suscriptionDate", $this->suscriptionDate);
        $stmt->bindParam(":lastUpdate", $this->lastUpdate);
        $stmt->bindParam(":enabled", $this->enabled);
-    
+       $stmt->bindParam(":idCoproperty", $this->idCoproperty);
+
        // execute the query
        if($stmt->execute()){
            return true;
@@ -162,7 +169,7 @@ class Coproperty{
        return false;
    }
 
-   // delete the product
+   // delete the copro
     function delete(){
     
        // delete query
@@ -172,10 +179,10 @@ class Coproperty{
        $stmt = $this->conn->prepare($query);
     
        // sanitize
-       $this->id=htmlspecialchars(strip_tags($this->id));
+       $this->idCoproperty=htmlspecialchars(strip_tags($this->idCoproperty));
     
-       // bind id of record to delete
-       $stmt->bindParam(1, $this->id);
+       // bind idCoproperty of record to delete
+       $stmt->bindParam(1, $this->idCoproperty);
     
        // execute query
        if($stmt->execute()){

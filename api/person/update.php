@@ -21,19 +21,18 @@ $person = new Person($db);
 $data = json_decode(file_get_contents("php://input"));
  
 // set ID property of person to be edited
-$person->idPerson = $data->idPerson;
+$person->idPerson = $data->id;
  
 // set person property values
 $person->firstName = $data->firstName;
-$person->$lastName = $data->lastName;
-$person->$phoneNumber = $data->phoneNumber;
-$person->$address = $data->address;
-$person->$email = $data->email;
-$person->$password = $data->password;
-$person->$language = $data->language;
-$person->$suscriptionDate = $data->suscriptionDate;
-$person->$lastUpdate = $data->suscriptionDate;
-$person->$enabled = $data->enabled;
+$person->lastName = $data->lastName;
+$person->phoneNumber = $data->phoneNumber;
+$person->address = $data->address;
+$person->email = $data->email;
+$person->password = $data->password;
+$person->language = $data->language;
+$person->lastUpdate = date('Y-m-d H:i:s');
+$person->enabled = $data->enabled;
  
 // update the person
 if($person->update()){

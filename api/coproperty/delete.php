@@ -9,29 +9,29 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
  
 // include database and object file
 include_once '../config/database.php';
-include_once '../objects/person.php';
+include_once '../objects/coproperty.php';
  
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare person object
-$person = new Person($db);
+// prepare coproperty object
+$coproperty = new Coproperty($db);
  
-// get person id
+// get coproperty id
 $data = json_decode(file_get_contents("php://input"));
  
-// set person id to be deleted
-$person->idPerson = $data->idPerson;
+// set coproperty id to be deleted
+$coproperty->idCoproperty = $data->idCoproperty;
  
-// delete the person
-if($person->delete()){
+// delete the coproperty
+if($coproperty->delete()){
     echo '{';
-        echo '"message": "person was deleted."';
+        echo '"message": "coproperty was deleted."';
     echo '}';
 }
  
-// if unable to delete the person
+// if unable to delete the coproperty
 else{
     echo '{';
         echo '"message": "Unable to delete object."';

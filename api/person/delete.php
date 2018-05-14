@@ -22,7 +22,7 @@ $person = new Person($db);
 $data = json_decode(file_get_contents("php://input"));
  
 // set person id to be deleted
-$person->idPerson = $data->idPerson;
+$person->idPerson = $data->id;
  
 // delete the person
 if($person->delete()){
