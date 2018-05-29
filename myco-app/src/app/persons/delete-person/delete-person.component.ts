@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { PersonService } from '../person.service';
+import { PersonService } from '../../person.service';
 import { Observable } from 'rxjs';
-import { Person } from '../person';
+import { Person } from '../../person';
 
 @Component({
   selector: 'app-delete-person',
@@ -20,6 +20,8 @@ export class DeletePersonComponent {
 
   // @Input enable getting the person_id from parent component (AppComponent)
   @Input() person_id;
+  @Input() coproperty_id;
+  @Input() role;
 
   // initialize person service
   constructor(private personService: PersonService) { }
@@ -44,7 +46,7 @@ export class DeletePersonComponent {
 
   // user clicks the 'read persons' button
   readPersons() {
-    this.show_read_persons_event.emit({ title: 'Read Persons' });
+    this.show_read_persons_event.emit({ title: 'Read ' + this.role, role: this.role, coproperty_id: this.coproperty_id });
   }
 
 }

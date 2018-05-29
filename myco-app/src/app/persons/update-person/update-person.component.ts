@@ -1,6 +1,6 @@
 import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { PersonService } from '../person.service';
+import { PersonService } from '../../person.service';
 // import { CategoryService } from '../category.service';
 import { Observable } from 'rxjs';
 // import { Category } from '../category';
@@ -18,6 +18,8 @@ export class UpdatePersonComponent implements OnChanges {
 
   @Output() show_read_persons_event = new EventEmitter();
   @Input() person_id;
+  @Input() coproperty_id;
+  @Input() role;
 
   // categories: Category[];
 
@@ -41,11 +43,13 @@ export class UpdatePersonComponent implements OnChanges {
     });
   }
 
-  // user clicks 'create' button
+  // user clicks 'update' button
   updatePerson() {
 
     // add person_id in the object so it can be updated
     this.update_person_form.value.id = this.person_id;
+    this.update_person_form.value.coproperty_id = this.coproperty_id;
+    this.update_person_form.value.role = this.role;
 
     // send data to server
     this.personService.updatePerson(this.update_person_form.value)
@@ -60,7 +64,7 @@ export class UpdatePersonComponent implements OnChanges {
 
   // user clicks the 'read persons' button
   readPersons() {
-    this.show_read_persons_event.emit({ title: 'Read Persons' });
+    this.show_read_persons_event.emit({ title: 'Read ' + this.role, role: this.role, coproperty_id: this.coproperty_id });
   }
 
   // call the record when 'person_id' was changed

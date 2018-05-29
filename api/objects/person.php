@@ -17,7 +17,10 @@ class Person{
     public $suscriptionDate;
     public $lastUpdate;
     public $enabled;
-    public $roles = [];
+    public $owners = [];
+    public $renters = [];
+    public $administrators = [];
+    public $staffs = [];
  
     // constructor with $db as database connection
     public function __construct($db){
@@ -41,6 +44,52 @@ class Person{
         // execute query
         $stmt->execute();
     
+        return $stmt;
+    }
+
+    //read owners
+    function readOwnersByCopro(){
+        $query = "SELECT
+                p.idPerson, p.firstName, p.lastName, p.phoneNumber, p.address, p.email,
+                p.language, p.suscriptionDate, p.lastUpdate, p.enabled
+            FROM
+                " . $this->table_name . " p INNER JOIN owners o on p.idPerson = o.idPerson
+                INNER JOIN properties prop on prop.idproperty = o.idProperty
+            where prop.idCoproperty = ?
+            ORDER BY
+                p.suscriptionDate DESC";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(1, $this->owners[0]->idCoproperty);
+
+        // execute query
+        $stmt->execute();
+
+        return $stmt;
+    }
+
+     //read administrators
+     function readAdministratorsByCopro(){
+        $query = "SELECT
+                p.idPerson, p.firstName, p.lastName, p.phoneNumber, p.address, p.email,
+                p.language, p.suscriptionDate, p.lastUpdate, p.enabled
+            FROM
+                " . $this->table_name . " p INNER JOIN administrators a on p.idPerson = a.idPerson
+            where a.idCoproperty = ?
+            ORDER BY
+                p.suscriptionDate DESC";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(1, $this->administrators[0]->idCoproperty);
+
+        // execute query
+        //echo $stmt->queryString;
+        $stmt->execute();
+
         return $stmt;
     }
 
@@ -82,6 +131,8 @@ class Person{
        $this->lastUpdate = $row['lastUpdate'];
        $this->enabled = $row['enabled'];
     }
+
+
     
     // create person
     function create(){

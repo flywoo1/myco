@@ -19,8 +19,15 @@ export class PersonService {
             .pipe(map(res => res.json()));
     }
 
+    // Get list of persons from remote server.
+    readRoles(idCoproperty, role): Observable<Person[]> {
+        return this._http
+            .get('http://localhost/myco/api/person/' + role + '.php?idCoproperty=' + idCoproperty)
+            .pipe(map(res => res.json()));
+    }
+
     // Create person
-    createPerson(person): Observable<Person[]> {
+    createPerson(person): Observable<Person> {
         const headers = new Headers({ 'Content-Type': 'application/json' });
         const options = new RequestOptions({ headers: headers });
 
@@ -32,14 +39,14 @@ export class PersonService {
     }
 
     // Read one person
-    readOnePerson(idPerson): Observable<Person[]> {
+    readOnePerson(idPerson): Observable<Person> {
         return this._http
         .get('http://localhost/myco/api/person/read_one.php?idPerson=' + idPerson)
         .pipe(map(res => res.json()));
     }
 
     // Update person
-    updatePerson(person): Observable<Person[]> {
+    updatePerson(person): Observable<Person> {
         const headers = new Headers({ 'Content-Type': 'application/json' });
         const options = new RequestOptions({ headers: headers });
 
@@ -51,7 +58,7 @@ export class PersonService {
     }
 
     // Delete person
-    deletePerson(idPerson): Observable<Person[]> {
+    deletePerson(idPerson) {
         const headers = new Headers({ 'Content-Type': 'application/json' });
         const options = new RequestOptions({ headers: headers });
 

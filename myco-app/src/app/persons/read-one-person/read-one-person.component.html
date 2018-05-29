@@ -1,7 +1,7 @@
 <div class="row m-b-18px">
   <div class="col-md-12">
     <a (click)="readPersons()" class='btn btn-primary pull-right'>
-          <span class='glyphicon glyphicon-list'></span> Read Persons
+          <span class='glyphicon glyphicon-list'></span> Read {{role}}
       </a>
   </div>
 </div>
@@ -37,6 +37,10 @@
       <tr>
         <td>Language</td>
         <td>{{person?.language}}</td>
+      </tr>
+      <tr *ngFor="let customParam of customParamsby">
+        <td></td>
+        <td></td>
       </tr>
     </table>
   </div>

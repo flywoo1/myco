@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { PersonService } from '../person.service';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { PersonService } from '../../person.service';
 import { Observable } from 'rxjs';
-import { Person } from '../person';
+import { Person } from '../../person';
+import { Owner } from '../../roles/owner';
 
 @Component({
     selector: 'app-read-persons',
@@ -10,7 +11,7 @@ import { Person } from '../person';
     providers: [PersonService]
 })
 
-export class ReadPersonsComponent implements OnInit {
+export class ReadPersonsComponent implements OnInit, OnChanges {
 
     /*
       * Needed to notify the 'consumer of this component', which is the 'AppComponent',
@@ -20,6 +21,10 @@ export class ReadPersonsComponent implements OnInit {
     @Output() show_read_one_person_event = new EventEmitter();
     @Output() show_update_person_event = new EventEmitter();
     @Output() show_delete_person_event = new EventEmitter();
+
+    // readpersonbyrolebycopro
+    @Input() coproperty_id;
+    @Input() role; // owners,administrators, renters, staffs
 
     // store list of persons
     persons: Person[];
@@ -31,7 +36,9 @@ export class ReadPersonsComponent implements OnInit {
     createPerson() {
         // tell the parent component (AppComponent)
         this.show_create_person_event.emit({
-            title: 'Create Person'
+            title: 'Create ' + this.role,
+            role: this.role,
+            coproperty_id: this.coproperty_id
         });
     }
 
@@ -41,7 +48,9 @@ export class ReadPersonsComponent implements OnInit {
         // tell the parent component (AppComponent)
         this.show_read_one_person_event.emit({
             person_id: id,
-            title: 'Read One Person'
+            title: 'Read One ' + this.role,
+            role: this.role,
+            coproperty_id: this.coproperty_id
         });
     }
     // when user clicks the 'update' button
@@ -49,7 +58,9 @@ export class ReadPersonsComponent implements OnInit {
         // tell the parent component (AppComponent)
         this.show_update_person_event.emit({
             person_id: id,
-            title: 'Update Person'
+            title: 'Update ' + this.role,
+            role: this.role,
+            coproperty_id: this.coproperty_id
         });
     }
     // when user clicks the 'delete' button
@@ -57,15 +68,24 @@ export class ReadPersonsComponent implements OnInit {
         // tell the parent component (AppComponent)
         this.show_delete_person_event.emit({
             person_id: id,
-            title: 'Delete Person'
+            title: 'Delete ' + this.role,
+            role: this.role,
+            coproperty_id: this.coproperty_id
         });
     }
 
     // Read persons from API.
     ngOnInit() {
-        this.personService.readPersons()
+        this.personService.readRoles(this.coproperty_id, this.role)
             .subscribe(persons =>
                 this.persons = persons['records']
-            );
+        );
+    }
+
+    ngOnChanges() {
+        this.personService.readRoles(this.coproperty_id, this.role)
+            .subscribe(persons =>
+                this.persons = persons['records']
+        );
     }
 }

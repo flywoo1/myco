@@ -8,8 +8,10 @@ import { Component } from '@angular/core';
 
 export class AppComponent {
   // properties for child components
-  title = 'Read Persons';
   person_id;
+  coproperty_id = 2;
+  role = 'owners'; // owners,administrators, renters, staffs
+  title = 'Read ' + this.role;
 
   // properties used to identify what views to show
   show_read_persons_html = true;
@@ -17,6 +19,12 @@ export class AppComponent {
   show_read_one_person_html = false;
   show_update_person_html = false;
   show_delete_person_html = false;
+
+  // change role
+  changeRole(role) {
+    this.role = role;
+    this.title = 'Read ' + this.role;
+  }
 
   // show the 'create person form'
   showCreatePerson($event) {
@@ -33,6 +41,8 @@ export class AppComponent {
   showReadPersons($event) {
     // set title
     this.title = $event.title;
+    this.coproperty_id = $event.coproperty_id;
+    this.role = $event.role;
 
     // hide all html then show only one html
     this.hideAll_Html();
@@ -57,6 +67,8 @@ export class AppComponent {
      // set title and person ID
      this.title = $event.title;
      this.person_id = $event.person_id;
+     this.coproperty_id = $event.coproperty_id;
+     this.role = $event.role;
 
      // hide all html then show only one html
      this.hideAll_Html();

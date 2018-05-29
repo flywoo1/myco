@@ -1,9 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { PersonService } from '../person.service';
+import { PersonService } from '../../person.service';
 // import { CategoryService } from '../category.service';
 import { Observable } from 'rxjs';
-import { Person } from '../person';
+import { Person } from '../../person';
 // import { Category } from '../category';
 
 @Component({
@@ -21,6 +21,8 @@ export class CreatePersonComponent {
 
     // @Output will tell the parent component (AppComponent) that an event happened in this component
     @Output() show_read_persons_event = new EventEmitter();
+    @Input() coproperty_id;
+    @Input() role;
 
     // TODO list of roles and list of languages
     // categories: Category[];
@@ -60,7 +62,7 @@ export class CreatePersonComponent {
 
     // user clicks the 'read persons' button
     readPersons() {
-        this.show_read_persons_event.emit({ title: 'Read Persons' });
+        this.show_read_persons_event.emit({ title: 'Read ' + this.role, role: this.role, coproperty_id: this.coproperty_id });
     }
 
     /* TODO what to do when this component were initialized

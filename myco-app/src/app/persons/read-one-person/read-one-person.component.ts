@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, OnChanges, EventEmitter } from '@angular/core';
-import { PersonService } from '../person.service';
+import { PersonService } from '../../person.service';
 import { Observable } from 'rxjs';
-import { Person } from '../person';
+import { Person } from '../../person';
 
 @Component({
   selector: 'app-read-one-person',
@@ -20,6 +20,8 @@ export class ReadOnePersonComponent implements OnChanges {
 
   // @Input means it will accept value from parent component (AppComponent)
   @Input() person_id;
+  @Input() coproperty_id;
+  @Input() role;
 
   person: Person;
 
@@ -28,8 +30,11 @@ export class ReadOnePersonComponent implements OnChanges {
 
   // user clicks the 'read persons' button
   readPersons() {
-    this.show_read_persons_event.emit({ title: 'Read Persons' });
+    this.show_read_persons_event.emit({ title: 'Read ' + this.role, role: this.role, coproperty_id: this.coproperty_id });
   }
+
+  // fn to filter by rol and idCopro
+
 
   // call the record when 'person_id' was changed
   ngOnChanges() {

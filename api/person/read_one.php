@@ -42,7 +42,10 @@ $stmt = $person->readOne();
         "suscriptionDate" => $person->suscriptionDate,
         "lastUpdate" => $person->lastUpdate,
         "enabled" => $person->enabled,
-        "roles" => $person->roles
+        "owners" => $person->owners,
+        "renters" => $person->renters,
+        "administrators" => $person->administrators,
+        "staffs" => $person->staffs
     );
 
     // assoc roles
@@ -60,7 +63,6 @@ $stmt = $person->readOne();
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
             extract($row);
-    
             $owner_arr=array(
                 "idOwner" => $idOwner,
                 "idProperty" => $idProperty,
@@ -104,7 +106,7 @@ $stmt = $person->readOne();
                     array_push($owner_arr["customParams"], $customParam_arr);
                 }
             }
-            array_push($persons_arr["roles"], $owner_arr);
+            array_push($persons_arr["owners"], $owner_arr);
         }
     }
 
@@ -165,7 +167,7 @@ $stmt = $person->readOne();
                     array_push($renter_arr["customParams"], $customParam_arr);
                 }
             }
-            array_push($persons_arr["roles"], $renter_arr);
+            array_push($persons_arr["renters"], $renter_arr);
         }
     }
     
@@ -226,7 +228,7 @@ $stmt = $person->readOne();
                     array_push($staff_arr["customParams"], $customParam_arr);
                 }
             }
-            array_push($persons_arr["roles"], $staff_arr);
+            array_push($persons_arr["staffs"], $staff_arr);
         }
     }
 
@@ -285,7 +287,7 @@ $stmt = $person->readOne();
                     array_push($administrator_arr["customParams"], $customParam_arr);
                 }
             }
-            array_push($persons_arr["roles"], $administrator_arr);
+            array_push($persons_arr["administrators"], $administrator_arr);
         }
     }
 
