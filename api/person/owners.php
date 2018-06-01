@@ -63,7 +63,7 @@ if($num>0){
         array_push($persons_arr["records"], $person_item);
     }
  
-    echo json_encode($persons_arr);
+    echo json_encode($persons_arr, JSON_NUMERIC_CHECK);
 }
  
 else{

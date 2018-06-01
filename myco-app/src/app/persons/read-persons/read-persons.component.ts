@@ -75,17 +75,18 @@ export class ReadPersonsComponent implements OnInit, OnChanges {
     }
 
     // Read persons from API.
-    ngOnInit() {
+    readPersonsByCoproAndRole() {
         this.personService.readRoles(this.coproperty_id, this.role)
-            .subscribe(persons =>
-                this.persons = persons['records']
+        .subscribe(persons =>
+            this.persons = persons['records']
         );
     }
 
+    ngOnInit() {
+        this.readPersonsByCoproAndRole();
+    }
+
     ngOnChanges() {
-        this.personService.readRoles(this.coproperty_id, this.role)
-            .subscribe(persons =>
-                this.persons = persons['records']
-        );
+        this.readPersonsByCoproAndRole();
     }
 }

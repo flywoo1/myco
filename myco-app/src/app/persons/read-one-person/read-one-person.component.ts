@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, OnChanges, EventEmitter } from '@angular/core';
 import { PersonService } from '../../person.service';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Person } from '../../person';
 
 @Component({
@@ -33,13 +34,27 @@ export class ReadOnePersonComponent implements OnChanges {
     this.show_read_persons_event.emit({ title: 'Read ' + this.role, role: this.role, coproperty_id: this.coproperty_id });
   }
 
-  // fn to filter by rol and idCopro
+
+
+  // read one person
+  readPerson() {
+    this.personService.readOnePerson(this.person_id)
+    // .filter(person => person.owners)
+    .subscribe(person => this.person = person);
+  }
+
+  hasThisRoleInThisCopro = (role, Roles) => {
+    let index = Roles.findIndex(item => item.idCoproperty === this.coproperty_id);
+    if (this.role !== role) {
+        index = -1;
+    }
+    return index;
+  }
 
 
   // call the record when 'person_id' was changed
   ngOnChanges() {
-    this.personService.readOnePerson(this.person_id)
-      .subscribe(person => this.person = person);
+    this.readPerson();
   }
 
 }

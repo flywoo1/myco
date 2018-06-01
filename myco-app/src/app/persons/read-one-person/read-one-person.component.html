@@ -38,10 +38,12 @@
         <td>Language</td>
         <td>{{person?.language}}</td>
       </tr>
-      <tr *ngFor="let customParam of customParamsby">
-        <td></td>
-        <td></td>
-      </tr>
     </table>
+    <!-- maybe a table for each role with for-->
+    <div *ngIf="this.person && hasThisRoleInThisCopro('owners', this.person.owners) > -1">
+      <div *ngFor="let customParam of this.person.owners[hasThisRoleInThisCopro('owners', this.person.owners)].customParams">
+        <span>{{customParam.label}}</span> - <span>{{customParam.value}}</span>
+      </div>
+    </div>
   </div>
 </div>

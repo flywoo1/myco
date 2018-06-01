@@ -293,5 +293,5 @@ $stmt = $person->readOne();
 
     // make it json format
     //print_r 
-    echo json_encode($persons_arr);
+    echo json_encode($persons_arr, JSON_NUMERIC_CHECK);
 ?>
