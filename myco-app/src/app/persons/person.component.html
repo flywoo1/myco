@@ -1,0 +1,93 @@
+<!-- container -->
+<div class="container">
+    
+      <!-- show page header -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class='page-header'>
+            <h1>{{title}}</h1>
+            <a (click)="changeRole('owners')" class='btn btn-danger m-r-5px'>
+              <span class='glyphicon glyphicon-remove'></span> Owners
+            </a>
+            <a (click)="changeRole('administrators')" class='btn btn-danger m-r-5px'>
+              <span class='glyphicon glyphicon-remove'></span> Administrators
+            </a>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Show this view if "show_read_persons_html" property of AppComponent is true. -->
+      <app-read-persons 
+        *ngIf="show_read_persons_html" [coproperty_id]="coproperty_id" [role]="role"
+        (show_create_person_event)="showCreatePerson($event)" 
+        (show_read_one_person_event)="showReadOnePerson($event)"
+        (show_update_person_event)="showUpdatePerson($event)"
+        (show_delete_person_event)="showDeletePerson($event)">
+      </app-read-persons>
+      
+      <!--
+        * Show this view if "show_create_person_html" is true.
+     
+        * If (show_read_persons_event) was emitted in CreatePersonComponent,
+          trigger showReadPersons() method in AppComponent.
+      -->
+      <app-create-person
+        *ngIf="show_create_person_html" 
+        (show_read_persons_event)="showReadPersons($event)"
+        [coproperty_id]="coproperty_id"
+        [role]="role">
+      </app-create-person>
+      
+      <!--
+        * Show this view if "show_read_one_person_html" is true.
+     
+        * If (show_read_persons_event) was emmited in ReadOnePersonComponent,
+          trigger showReadPersons() method in AppComponent.
+     
+        * Pass "person_id" property value of AppComponent
+          to [person_id] property of ReadOnePersonComponent.
+    -->
+      <app-read-one-person 
+        *ngIf="show_read_one_person_html" 
+        (show_read_persons_event)="showReadPersons($event)" 
+        [person_id]="person_id"
+        [coproperty_id]="coproperty_id"
+        [role]="role">
+      </app-read-one-person>
+    
+      <!--
+        * Show this view if "show_update_person_html" is true.
+     
+        * Pass "person_id" property value of AppComponent
+          to [person_id] property of UpdatePersonComponent.
+     
+        * If (show_read_persons_event) was emitted in UpdatePersonComponent,
+          trigger showReadPersons() method in AppComponent.
+      -->
+      <app-update-person
+        *ngIf="show_update_person_html"
+        [person_id]="person_id"
+        [coproperty_id]="coproperty_id"
+        [role]="role"
+        (show_read_persons_event)="showReadPersons($event)">
+      </app-update-person>
+    
+      <!--
+      * Show this view if "show_delete_person_html" is true.
+    
+      * Pass "person_id" property value of AppComponent
+        to [person_id] property of UpdatePersonComponent.
+    
+      * If (show_read_persons_event) was emitted in DeletePersonComponent,
+        trigger showReadPersons() method in AppComponent.
+      -->
+      <app-delete-person
+        *ngIf="show_delete_person_html"
+        [person_id]="person_id"
+        [coproperty_id]="coproperty_id"
+        [role]="role"
+        (show_read_persons_event)="showReadPersons($event)">
+      </app-delete-person>
+    </div>
+    <!-- /container -->
+    
